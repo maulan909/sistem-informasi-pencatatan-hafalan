@@ -1,3 +1,4 @@
-# tsi-consol-management
-<h2>Aplikasi Monitoring untuk penggabungan Paket di TaniSupply Indonesia</h2>
-Aplikasi ini adalah hasil kolaborasi saya dengan seorang karyawan dari PT. TaniSupply Indonesia, atau perusahaan yang lebih dikenal dengan platform E-Commerce Tanihub, sistem ini digunakan untuk deteksi item-item yang sudah dipersiapkan oleh tim helper (picker dan packer) dari chamber berbeda untuk gabungkan. dengan sistem ini, tim Consol akan lebih mudah mengidentifikasi sebuah Paket orderan customer sudah lengkap atau memiliki kekurangan, sehingga dengan sistem ini diharapkan memudahkan identifikasi dan penggabungan paket untuk mempercepat proses pengiriman atau delivery ke customer.
+# Sistem Informasi Pencatat Hafalan di Pondok Pesantren Al-Ihsan Baron
+
+<h2>Sistem Informasi Pencatat Hafalan di Pondok Pesantren Al-Ihsan Baron</h2>
+Aplikasi ini berfungsi untuk menjadi tempat catatan dari para ustadz & guru di Pondok Pesantren Al-Ihsan, dalam melakukan penilaian hafalan dari peserta didik di sekolah tersebut, selain itu, aplikasi ini juga dibuat untuk mempermudah penyampaian informasi kepada orang tua, sehingga orang tua dapat ikut memonitoring kegiatan setor hafalan dan muroja'ah anaknya masing-masing.
