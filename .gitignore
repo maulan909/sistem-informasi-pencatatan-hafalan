@@ -1,0 +1,6 @@
+application/config/database.php
+application/config/config.php
+user_guide/
+error_log
+.htaccess
+cgi-bin/
