@@ -3,8 +3,8 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url(); ?>">
-        <img src="<?= base_url('assets/img/tsi.png') ?>">
-        <div class="sidebar-brand-text mx-3">TSI Consolidate Management</div>
+        <!-- <img src="<?= base_url('assets/img/tsi.png') ?>"> -->
+        <div class="sidebar-brand-text fs-6">Sistem Monitoring Tahfizh</div>
     </a>
 
     <!-- Divider -->
@@ -74,6 +74,10 @@
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-xxl-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">

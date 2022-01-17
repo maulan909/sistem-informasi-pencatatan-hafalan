@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" type="image/png" href="<?= base_url() ?>assets/img/tsi.png">
 
-    <title><?= $title ?> - TSI Consolidate Management</title>
+    <title><?= $title ?> - Sistem Monitoring Tahfizh</title>
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url() ?>assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

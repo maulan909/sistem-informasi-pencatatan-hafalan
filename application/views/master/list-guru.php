@@ -50,10 +50,11 @@
                                         <td><?= $d->alamat; ?></td>
                                         <td><?= $d->telepon; ?></td>
                                         <td><?= $d->role; ?></td>
-                                        <td>
+                                        <td class="text-center">
                                             <?php if ($d->role_id != 1) : ?>
-                                                <a href="" class="btn btn-success mt-1 btnEditUser" data-id="<?= $d->id; ?>" data-toggle="modal" data-target="#guruModal"><i class="fas fa-fw fa-edit"></i></a>
-                                                <a href="" class="btn btn-danger mt-1 btnHapusUser" data-id="<?= $d->id; ?>" data-toggle="modal" data-target="#userHapusModal"><i class="fas fa-fw fa-trash-alt"></i></a>
+                                                <a href="" class="btn btn-sm btn-info mt-1 btnDetailGuru" data-id="<?= $d->id; ?>" data-toggle="modal" data-target="#guruDetailModal"><i class="fas fa-fw fa-info-circle"></i></a>
+                                                <a href="" class="btn btn-sm btn-success mt-1 btnEditGuru" data-id="<?= $d->id; ?>" data-toggle="modal" data-target="#guruModal"><i class="fas fa-fw fa-edit"></i></a>
+                                                <a href="" class="btn btn-sm btn-danger mt-1 btnHapusGuru" data-id="<?= $d->id; ?>" data-toggle="modal" data-target="#guruHapusModal"><i class="fas fa-fw fa-trash-alt"></i></a>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -70,7 +71,27 @@
 </div>
 <!-- /.container-fluid -->
 
-<!-- User Modal -->
+<!-- Guru Detail Modal -->
+<div class="modal fade" id="guruDetailModal" tabindex="-1" aria-labelledby="guruDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="guruDetailModalLabel">Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Guru Add and Edit Modal -->
 <div class="modal fade" id="guruModal" tabindex="-1" role="dialog" aria-labelledby="guruModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -133,11 +154,11 @@
     </div>
 </div>
 <!-- Hapus Modal -->
-<div class="modal fade" id="userHapusModal" tabindex="-1" role="dialog" aria-labelledby="userHapusModalLabel" aria-hidden="true">
+<div class="modal fade" id="guruHapusModal" tabindex="-1" role="dialog" aria-labelledby="guruHapusModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="userHapusModalLabel">Yakin Hapus User?</h5>
+                <h5 class="modal-title" id="guruHapusModalLabel">Yakin Hapus User?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
