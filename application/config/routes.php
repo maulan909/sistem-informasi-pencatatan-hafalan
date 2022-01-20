@@ -52,3 +52,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['master/add-guru'] = 'master/add_guru';
+$route['master/edit-guru/(:num)'] = 'master/edit_guru/$1';
+$route['master/hapus-guru/(:num)'] = 'master/delete_guru/$1';
+$route['master/import-guru'] = 'master/import_guru';
+
+$route['master/add-siswa'] = 'master/add_siswa';
+$route['master/edit-siswa/(:num)'] = 'master/edit_siswa/$1';
+$route['master/hapus-siswa/(:num)'] = 'master/delete_siswa/$1';
+$route['master/import-siswa'] = 'master/import_siswa';

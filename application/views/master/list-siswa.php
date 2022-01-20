@@ -7,10 +7,10 @@
     <h1 class="h3 mb-2 text-gray-800"><?= $title; ?></h1>
     <div class="row justify-content-between text-right text-lg-left">
         <div class="col-lg-6 mb-2">
-            <a href="<?= base_url('master/add-guru'); ?>" class="btn btn-primary btn-sm">Tambah <?= $title; ?></a>
+            <a href="<?= base_url('master/add-siswa'); ?>" class="btn btn-primary btn-sm">Tambah <?= $title; ?></a>
         </div>
         <div class="col-lg-6 text-right">
-            <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#importGuruModal">Import Data Guru</button>
+            <button class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#importSiswaModal">Import Data Siswa</button>
         </div>
     </div>
     <div class="row">
@@ -25,7 +25,7 @@
                             <thead>
                                 <tr>
                                     <th width="5%">#</th>
-                                    <th>NIP</th>
+                                    <th>NIS</th>
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th width="10%">Action</th>
@@ -45,14 +45,14 @@
                                 <?php foreach ($data as $d) : ?>
                                     <tr>
                                         <td><?= $i; ?></td>
-                                        <td><?= $d->nip; ?></td>
+                                        <td><?= $d->nis; ?></td>
                                         <td><?= $d->name; ?></td>
                                         <td><?= $d->email; ?></td>
                                         <td class="text-center">
                                             <?php if ($d->role_id != 1) : ?>
-                                                <a href="" class="btn btn-sm btn-info mt-1 btnDetailGuru" data-id="<?= $d->id; ?>" data-toggle="modal" data-target="#guruDetailModal"><i class="fas fa-fw fa-info-circle"></i></a>
-                                                <a href="<?= base_url('master/edit-guru/' . $d->id); ?>" class="btn btn-sm btn-success mt-1 btnEditGuru"><i class="fas fa-fw fa-edit"></i></a>
-                                                <a href="" class="btn btn-sm btn-danger mt-1 btnHapusGuru" data-id="<?= $d->id; ?>" data-toggle="modal" data-target="#guruHapusModal"><i class="fas fa-fw fa-trash-alt"></i></a>
+                                                <a href="" class="btn btn-sm btn-info mt-1 btnDetailSiswa" data-id="<?= $d->id; ?>" data-toggle="modal" data-target="#siswaDetailModal"><i class="fas fa-fw fa-info-circle"></i></a>
+                                                <a href="<?= base_url('master/edit-siswa/' . $d->id); ?>" class="btn btn-sm btn-success mt-1 btnEditSiswa"><i class="fas fa-fw fa-edit"></i></a>
+                                                <a href="" class="btn btn-sm btn-danger mt-1 btnHapusSiswa" data-id="<?= $d->id; ?>" data-toggle="modal" data-target="#siswaHapusModal"><i class="fas fa-fw fa-trash-alt"></i></a>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -68,12 +68,12 @@
 </div>
 <!-- /.container-fluid -->
 
-<!-- Guru Detail Modal -->
-<div class="modal fade" id="guruDetailModal" tabindex="-1" aria-labelledby="guruDetailModalLabel" aria-hidden="true">
+<!-- Siswa Detail Modal -->
+<div class="modal fade" id="siswaDetailModal" tabindex="-1" aria-labelledby="siswaDetailModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="guruDetailModalLabel">Detail</h5>
+                <h5 class="modal-title" id="siswaDetailModalLabel">Detail</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -88,16 +88,16 @@
     </div>
 </div>
 <!-- Import Modal -->
-<div class="modal fade" id="importGuruModal" tabindex="-1" aria-labelledby="importGuruModalLabel" aria-hidden="true">
+<div class="modal fade" id="importSiswaModal" tabindex="-1" aria-labelledby="importSiswaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="importGuruModalLabel">Import Data Guru</h5>
+                <h5 class="modal-title" id="importSiswaModalLabel">Import Data Siswa</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('master/import-guru'); ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= base_url('master/import-siswa'); ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="importFile">Pilih Data</label>
@@ -113,17 +113,17 @@
     </div>
 </div>
 <!-- Hapus Modal -->
-<div class="modal fade" id="guruHapusModal" tabindex="-1" role="dialog" aria-labelledby="guruHapusModalLabel" aria-hidden="true">
+<div class="modal fade" id="siswaHapusModal" tabindex="-1" role="dialog" aria-labelledby="siswaHapusModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="guruHapusModalLabel">Yakin Hapus User?</h5>
+                <h5 class="modal-title" id="siswaHapusModalLabel">Yakin Hapus User?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Yakin ingin menghapus data guru ini?
+                Yakin ingin menghapus data siswa ini?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

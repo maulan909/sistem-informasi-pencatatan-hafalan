@@ -2,174 +2,6 @@ $(document).ready(function () {
     console.log('https://github.com/maulan909');
     var pdf = {};
     //ajax location
-    $('#palet_no').on('keyup', function () {
-        var locInput = $(this).val();
-        pdf.palet_no = locInput;
-        $.ajax({
-            url: url + 'consol/get',
-            method: 'post',
-            data: { location: locInput },
-            dataType: 'json',
-            success: function (data) {
-                if (data.status == 'overload') {
-                    $('#suggested')
-                        .attr('class', 'text text-danger')
-                        .html(
-                            'Disarankan menggunakan palet no ' +
-                                data.suggest +
-                                ' karena total koli lebih sedikit'
-                        );
-                } else if (data.status == 'reject') {
-                    $('#suggested')
-                        .attr('class', 'text text-danger')
-                        .html('Palet no ' + locInput + ' tidak tersedia');
-                } else {
-                    $('#suggested').attr('class', 'd-none');
-                }
-            },
-        });
-    });
-
-    $('#ca_no').on('keyup', function () {
-        var caNo = $(this).val();
-        $.ajax({
-            url: url + 'consol/get',
-            method: 'post',
-            data: { ca_no: caNo },
-            dataType: 'json',
-            success: function (data) {
-                if (data.status != null) {
-                    if (data.status == 'first') {
-                        $('#jmlPicklist')
-                            .attr('class', 'alert alert-primary')
-                            .html(
-                                'Picklist ke : ' +
-                                    (data.consol + 1) +
-                                    ' dari ' +
-                                    data.picklist +
-                                    ' Picklist'
-                            );
-                        $('#jmlKoli')
-                            .attr('class', 'alert alert-primary')
-                            .html(
-                                'Total Koli Sebelumnya: ' + data.koli + ' Koli'
-                            );
-                        $('#picklist_ke').val(data.consol + 1);
-                        $('#total_picklist').val(data.picklist);
-                        if (data.zona != '') {
-                            $('#kotaZona')
-                                .attr(
-                                    'class',
-                                    'h4 font-weight-bold alert alert-primary'
-                                )
-                                .html(
-                                    'Tujuan : ' + data.kota + ' | ' + data.zona
-                                );
-                        }
-                    } else if (data.status == 'part') {
-                        $('#ca_no').attr('readonly', '');
-                        $('#palet_no').val(data.palet_no);
-                        $('#palet_no').attr('readonly', '');
-                        $('#jmlPicklist')
-                            .attr('class', 'alert alert-primary')
-                            .html(
-                                'Picklist ke : ' +
-                                    (data.consol + 1) +
-                                    ' dari ' +
-                                    data.picklist +
-                                    ' Picklist'
-                            );
-                        $('#jmlKoli')
-                            .attr('class', 'alert alert-primary')
-                            .html(
-                                'Total Koli Sebelumnya: ' + data.koli + ' Koli'
-                            );
-                        $('#picklist_ke').val(data.consol + 1);
-                        $('#total_picklist').val(data.picklist);
-                        if (data.zona != '') {
-                            $('#kotaZona')
-                                .attr(
-                                    'class',
-                                    'h4 font-weight-bold alert alert-primary'
-                                )
-                                .html(
-                                    'Tujuan : ' + data.kota + ' | ' + data.zona
-                                );
-                        }
-                    } else if (data.status == 'moved') {
-                        swal({
-                            title: 'Nomor CA ini sudah di Pindah Ke Zona Pengiriman ',
-                            icon: 'warning',
-                            text: 'Ada indikasi kelebihan barang di Nomor CA yang anda input!',
-                            buttons: ['Batal', 'OK'],
-                        }).then((willCheck) => {
-                            if (willCheck) {
-                                window.open(
-                                    url +
-                                        'package/moved#search=' +
-                                        encodeURI(caNo),
-                                    '_self'
-                                );
-                            } else {
-                                window.open(
-                                    url +
-                                        'package/moved#search=' +
-                                        encodeURI(caNo),
-                                    '_self'
-                                );
-                            }
-                        });
-                    } else if (data.status == 'full') {
-                        swal({
-                            title:
-                                'Nomor CA ini sudah lengkap dan berada di Palet No ' +
-                                data.palet_no,
-                            icon: 'info',
-                            text: 'Ada indikasi kelebihan barang di Nomor CA yang anda input!',
-                            buttons: ['Batal', 'Cek'],
-                        }).then((willCheck) => {
-                            if (willCheck) {
-                                window.open(
-                                    url +
-                                        'package/readytomove#search=' +
-                                        encodeURI(caNo),
-                                    '_self'
-                                );
-                            } else {
-                                window.open(
-                                    url +
-                                        'package/readytomove#search=' +
-                                        encodeURI(caNo),
-                                    '_self'
-                                );
-                            }
-                        });
-                    } else if (data.status == 'done') {
-                        swal({
-                            title: 'Nomor CA ini sudah di dikirim !',
-                            icon: 'warning',
-                            text: 'Ada indikasi kelebihan barang di Nomor CA yang anda input!',
-                            buttons: ['Batal', 'OK'],
-                        }).then((willCheck) => {
-                            if (willCheck) {
-                                window.open(url + 'package/history', '_self');
-                            } else {
-                                window.open(url + 'package/history', '_self');
-                            }
-                        });
-                    }
-                    pdf = data;
-                } else {
-                    $('#kotaZona').attr('class', 'd-none');
-                    $('#jmlPicklist').attr('class', 'd-none');
-                    $('#jmlKoli').attr('class', 'd-none');
-                    $('#picklist_ke').val('');
-                    $('#total_picklist').val('');
-                    pdf.ca_no = caNo;
-                }
-            },
-        });
-    });
 
     //pdf generate
     $('#generatePDF').on('click', function () {
@@ -221,146 +53,29 @@ $(document).ready(function () {
         );
         this.target = 'Popup_Window';
     });
-    //data table ready to move
-    $('#readyList').DataTable({
-        columnDefs: [{ orderable: false, targets: 5 }],
-        oSearch: { sSearch: searchString },
-    });
-
-    //data table moved package
-    $('#movedList').DataTable({
-        columnDefs: [{ orderable: false, targets: 5 }],
-        oSearch: { sSearch: searchString },
-    });
-
-    //data table offline
-    $('#offlineList').DataTable({
-        columnDefs: [{ orderable: false, targets: 3 }],
-    });
-    $('#historyTable').DataTable({
-        order: [[6, 'desc']],
-        oSearch: { sSearch: searchString },
-    });
-
-    //confirm move CA Consol to Delivery
-    $('#readyList').on('click', '.moveCons', function () {
-        const id = $(this).data('id');
-        swal({
-            title: 'Anda yakin ingin memindahkan data ini?',
-            text: 'Paket akan di pindahkan ke Zona Pengiriman!',
-            icon: 'warning',
-            buttons: ['Batal', 'Pindahkan'],
-            dangerMode: true,
-        }).then((willMove) => {
-            if (willMove) {
-                $.ajax({
-                    url: url + 'package/movedeliver',
-                    method: 'post',
-                    data: { ca: id },
-                    dataType: 'json',
-                    success: function () {},
-                });
-                setTimeout(function () {
-                    window.open(url + 'package/readytomove', '_self');
-                }, time);
-            }
-        });
-    });
-
-    //confirm move back Delivery to Consol
-    $('#movedList').on('click', '.moveReverse', function () {
-        const id = $(this).data('id');
-        swal({
-            title: 'Anda yakin ingin memindahkan data ini?',
-            text: 'Paket akan di pindahkan kembali ke palet consol!',
-            icon: 'warning',
-            buttons: ['Batal', 'Pindahkan'],
-            dangerMode: true,
-        }).then((willMove) => {
-            if (willMove) {
-                $.ajax({
-                    url: url + 'package/moveReverse',
-                    method: 'post',
-                    data: { ca_no: id },
-                    dataType: 'json',
-                    success: function () {},
-                });
-                setTimeout(function () {
-                    window.open(url + 'package/moved', '_self');
-                }, time);
-            }
-        });
-    });
-
-    //confirm move Offline Consol to Delivery
-    $('#offlineList').on('click', '.moveConsUnd', function () {
-        const id = $(this).data('id');
-        swal({
-            title: 'Anda yakin ingin memindahkan data ini?',
-            text: 'Paket akan di pindahkan ke Zona Pengiriman!',
-            icon: 'warning',
-            buttons: ['Batal', 'Pindahkan'],
-            dangerMode: true,
-        }).then((willMove) => {
-            if (willMove) {
-                $.ajax({
-                    url: url + 'package/movedeliver',
-                    method: 'post',
-                    data: { ca: id },
-                    dataType: 'json',
-                    success: function () {},
-                });
-                setTimeout(function () {
-                    window.open(url + 'package/undetected', '_self');
-                }, time);
-            }
-        });
-    });
-
-    //ajax edit item consol
-    $('#ca_no_edit').on('keyup', function () {
-        var caNoEdit = $('#ca_no_edit').val();
-
-        $.get('ajax/data.php?key=' + caNoEdit, function (data) {
-            var hasil = data.split('_');
-            if (hasil != '') {
-                $('#loc_palet').val(hasil[1]);
-                $('#loc_palet').attr('disabled', '');
-            } else {
-                $('#loc_palet').removeAttr('disabled', '');
-            }
-        });
-    });
-
-    //validation Form Edit Consol
-    $('#formConsEdit').submit(function () {
-        var caNo = $('#ca_no_edit').val().length;
-        var loc = $('#loc_palet');
-        var koli = $('#koli');
-
-        if (caNo == 0) {
-            $('#caval').html('Nomor CA wajib diisi!');
-            return false;
-        } else if (loc.val().length == 0) {
-            $('#palval').attr('class', 'text text-danger');
-            $('#palval').html('Lokasi Palet wajib diisi!');
-            return false;
-        } else if (koli.val().length == 0) {
-            $('#koval').html('Jumlah Koli wajib diisi!');
-            return false;
-        } else if (loc.val() < 0) {
-            $('#palval').html('Masukan angka di atas 0!');
-            return false;
-        } else if (koli.val() < 0) {
-            $('#koval').html('Masukan angka di atas 0!');
-            return false;
-        }
-        $('#ca_no_edit').removeAttr('disabled', '');
-        $('#loc_palet').removeAttr('disabled', '');
-    });
 
     //form validation number
-    $('#palet_no').on('keypress keyup blur', function (event) {
+    $('#nip').on('keypress keyup blur', function (event) {
+        $(this).val(
+            $(this)
+                .val()
+                .replace(/[^\d].+/, '')
+        );
+        if (event.which < 48 || event.which > 57) {
+            event.preventDefault();
+        }
+    });
+    $('#nis').on('keypress keyup blur', function (event) {
+        $(this).val(
+            $(this)
+                .val()
+                .replace(/[^\d].+/, '')
+        );
+        if (event.which < 48 || event.which > 57) {
+            event.preventDefault();
+        }
+    });
+    $('#telepon').on('keypress keyup blur', function (event) {
         $(this).val(
             $(this)
                 .val()
@@ -371,38 +86,6 @@ $(document).ready(function () {
         }
     });
 
-    //form validation number
-    $('#koli').on('keypress keyup blur', function (event) {
-        $(this).val(
-            $(this)
-                .val()
-                .replace(/[^\d].+/, '')
-        );
-        if (event.which < 48 || event.which > 57) {
-            event.preventDefault();
-        }
-        pdf.current = $(this).val();
-    });
-    $.ajax({
-        url: url + 'package/check',
-        method: 'post',
-        dataType: 'json',
-        data: { key: 'user' },
-        success: function (data) {
-            if (data.ready == true) {
-                $('#readytomove').attr(
-                    'class',
-                    'badge badge-primary badge-counter d-inline-block'
-                );
-            }
-            if (data.undetected == true) {
-                $('#undetected').attr(
-                    'class',
-                    'badge badge-primary badge-counter d-inline-block'
-                );
-            }
-        },
-    });
     $('#username').on('keyup', function () {
         var username = $('#username').val();
         var type = 'username';
@@ -427,9 +110,33 @@ $(document).ready(function () {
             },
         });
     });
+    $('#nip').on('keyup', function () {
+        var nip = $('#nip').val();
+        var type = 'guru.nip';
+        $.ajax({
+            url: url + 'master/getguru',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                type: type,
+                key: nip,
+            },
+            success: function (data) {
+                if (data) {
+                    $('#alertNip').html(data.nip + ' already used');
+                } else {
+                    if (nip.length >= 0 && nip.length <= 30) {
+                        $('#alertNip').html(nip + ' available');
+                    } else {
+                        $('#alertNip').html('');
+                    }
+                }
+            },
+        });
+    });
     $('#email').on('keyup', function () {
         var email = $('#email').val();
-        var type = 'email';
+        var type = 'user.email';
         $.ajax({
             url: url + 'user/check',
             method: 'post',
@@ -503,54 +210,6 @@ $(document).ready(function () {
             },
         });
     });
-    $('#btnTambahGuru').on('click', function () {
-        $('#userModalLabel').html('Tambah User');
-        $('#userModal form').attr('action', url + 'user');
-        $('#userModal button[type=submit]').html('Tambah');
-
-        $('#id').val('');
-        $('#username').val('');
-        $('#username').removeAttr('readOnly');
-        $('#email').val('');
-        $('#email').removeAttr('readOnly');
-        $('#password').attr('required', '');
-        $('#role_id').val('');
-        $('#is_active').attr('checked', '');
-        $('#alertUsername').html('');
-        $('#alertEmail').html('');
-    });
-    $('#userTable').on('click', '.btnEditGuru', function () {
-        var id = $(this).data('id');
-        $('#password').val('');
-        $('#userModalLabel').html('Edit User');
-        $('#userModal form').attr('action', url + 'user/edit');
-        $('#userModal button[type=submit]').html('Edit');
-        $.ajax({
-            url: url + 'user/check',
-            method: 'post',
-            data: {
-                type: 'id',
-                key: id,
-            },
-            dataType: 'json',
-            success: function (data) {
-                $('#id').val(data.id);
-                $('#username').val(data.username);
-                $('#username').attr('readOnly', '');
-                $('#email').val(data.email);
-                $('#email').attr('readOnly', '');
-                $('#password').removeAttr('required');
-                $('#role_id').val(data.role_id);
-                $('#alertUsername').html('');
-                $('#alertEmail').html('');
-                if (data.is_active == 1) {
-                    $('#is_active').attr('checked', '');
-                } else {
-                    $('#is_active').removeAttr('checked');
-                }
-            },
-        });
-    });
     $('#userTable').on('click', '.btnHapusUser', function () {
         var id = $(this).data('id');
         $('#userHapusModal a').attr('href', url + 'user/hapus/' + id);
@@ -587,6 +246,95 @@ $(document).ready(function () {
     $('.btnHapusRole').on('click', function () {
         var id = $(this).data('id');
         $('#roleHapusModal a').attr('href', url + 'user/hapusrole/' + id);
+    });
+    $('#userTable').on('click', '.btnDetailGuru', function () {
+        var id = $(this).data('id');
+        $.ajax({
+            url: url + 'master/getguru',
+            method: 'post',
+            data: {
+                type: 'guru.id',
+                key: id,
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = `
+                <table>
+                <tr>
+                <td class="w-50 py-2">NIP</td>
+                <td class="w-50">${data.nip}</td>
+                </tr>
+                <tr>
+                <td class="w-50 py-2">Nama</td>
+                <td class="w-50">${data.name}</td>
+                </tr>
+                <tr>
+                <td class="w-50 py-2">Email</td>
+                <td class="w-50">${data.email}</td>
+                </tr>
+                <tr>
+                <td class="w-50 py-2">Nomor Telepon</td>
+                <td class="w-50">${data.telepon}</td>
+                </tr>
+                <tr>
+                <td class="w-50 py-2">Alamat</td>
+                <td class="w-50">${data.alamat}</td>
+                </tr>
+                </table>`;
+                $('#guruDetailModal .modal-body').html(html);
+            },
+        });
+    });
+    $('#userTable').on('click', '.btnHapusGuru', function () {
+        var id = $(this).data('id');
+        $('#guruHapusModal a').attr('href', url + 'master/hapus-guru/' + id);
+    });
+
+    $('#userTable').on('click', '.btnDetailSiswa', function () {
+        var id = $(this).data('id');
+        $.ajax({
+            url: url + 'master/getsiswa',
+            method: 'post',
+            data: {
+                type: 'siswa.id',
+                key: id,
+            },
+            dataType: 'json',
+            success: function (data) {
+                let html = `
+                <table>
+                <tr>
+                <td class="w-50 py-2">NIS</td>
+                <td class="w-50">${data.nis}</td>
+                </tr>
+                <tr>
+                <td class="w-50 py-2">Nama</td>
+                <td class="w-50">${data.name}</td>
+                </tr>
+                <tr>
+                <td class="w-50 py-2">Kelas</td>
+                <td class="w-50">${data.kelas}</td>
+                </tr>
+                <tr>
+                <td class="w-50 py-2">Email</td>
+                <td class="w-50">${data.email}</td>
+                </tr>
+                <tr>
+                <td class="w-50 py-2">Nomor Telepon</td>
+                <td class="w-50">${data.telepon}</td>
+                </tr>
+                <tr>
+                <td class="w-50 py-2">Alamat</td>
+                <td class="w-50">${data.alamat}</td>
+                </tr>
+                </table>`;
+                $('#siswaDetailModal .modal-body').html(html);
+            },
+        });
+    });
+    $('#userTable').on('click', '.btnHapusSiswa', function () {
+        var id = $(this).data('id');
+        $('#siswaHapusModal a').attr('href', url + 'master/hapus-siswa/' + id);
     });
     $('.table-bordered').on('click', '.form-check-input', function () {
         const roleId = $(this).data('role');
